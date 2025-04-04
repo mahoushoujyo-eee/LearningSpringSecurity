@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f4f4f9; }
+        .register-container { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); width: 300px; }
+        .register-container h2 { margin-bottom: 20px; }
+        .register-container input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; }
+        .register-container button { width: 100%; padding: 10px; background-color: #28a745; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+        .register-container button:hover { background-color: #218838; }
+        .register-container a { display: block; text-align: right; margin-top: 10px; color: #007bff; text-decoration: none; }
+        .register-container a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h2>注册</h2>
+        <form action="/register" method="post" id="registerForm">
+            <input type="text" name="username" id="username" placeholder="用户名" required>
+            <input type="email" name="email" id="email" placeholder="邮箱" required>
+            <input type="password" name="password" id="password" placeholder="密码" required>
+            <button type="submit">注册</button>
+        </form>
+        <a href="/index.html">已有账号？登录</a>
+    </div>
+</body>
+</html>
+
+<script>
+    document.getElementById('registerForm').addEventListener('submit', function(event)
+    {
+        event.preventDefault();
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        fetch('/user/register',
+        {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, email, password })
+        })
+        .then(response => response.json())
+        .then(data =>
+        {
+            if (data.success)
+            {
+                alert('注册成功');
+                window.location.href = '/login.html';
+            }
+            else
+            {
+                alert('注册失败: ' + data.message);
+            }
+        });
+    });
+</script>

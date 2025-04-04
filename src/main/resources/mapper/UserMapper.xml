@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.example.learingss.mapper.UserMapper">
+    <insert id="insertUser">
+        insert into user(username, password, email) values (#{username}, #{password}, #{email})
+    </insert>
+    <update id="resetPasswordByUsername">
+        update user set password = #{password} where username = #{username}
+    </update>
+    <select id="ifContainsUsername" resultType="java.lang.Boolean">
+        SELECT COUNT(*) FROM user WHERE username = #{username}
+    </select>
+    <select id="getUserByUsername" resultType="org.example.learingss.entities.User">
+        SELECT * FROM user WHERE username = #{username}
+    </select>
+</mapper>

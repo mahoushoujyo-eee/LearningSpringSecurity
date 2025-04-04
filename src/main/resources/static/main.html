@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f4f4f9; }
+        .welcome-container { background-color: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 0 20px rgba(0,0,0,0.1); width: 400px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="welcome-container">
+        <h1>欢迎使用 {{ app_name }}</h1>
+        <p>当前用户: {% if user.is_authenticated %}{{ user.username }}{% else %}访客{% endif %}</p>
+        <div>
+            <a href="" class="btn">登录</a>
+            <a href="" class="btn">注册</a>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // 阻止表单默认提交行为
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        fetch('/user/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('登录成功');
+                    // 可以在这里添加跳转逻辑，例如 window.location.href = '/dashboard';
+                } else {
+                    alert('登录失败: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('登录请求失败，请重试');
+            });
+    });
+</script>
