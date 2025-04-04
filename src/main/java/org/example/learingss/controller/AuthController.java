@@ -12,4 +12,10 @@ public class AuthController
     {
         return "{\"message\":\"Hello! You passed our check!\"}";
     }
+
+    @RequestMapping("/admin")
+    public String admin()
+    {
+        return "{\"message\":\"Hello! You passed our admin check!\"}";
+    }
 }

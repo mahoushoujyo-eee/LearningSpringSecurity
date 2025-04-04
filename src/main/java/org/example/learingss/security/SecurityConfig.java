@@ -54,7 +54,8 @@ public class SecurityConfig
     {
         http.authorizeHttpRequests(auth ->
                         auth.requestMatchers("/user/**", "/index.html", "/register.html").permitAll()
-                        .anyRequest().authenticated()
+                                .requestMatchers("/auth/admin").hasRole("ADMIN")
+                                .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())
                 .cors(customizer -> customizer.disable())

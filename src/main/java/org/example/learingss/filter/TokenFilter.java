@@ -24,23 +24,23 @@ public class TokenFilter extends OncePerRequestFilter
         String token = request.getHeader("token");
         if (token == null || token.isEmpty())
         {
-            response.setContentType("application/json;charset=utf-8");
-            response.getWriter().write("{\"msg\":\"token为空\"}");
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return;
+//            response.setContentType("application/json;charset=utf-8");
+//            response.getWriter().write("{\"msg\":\"token为空\"}");
+//            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
         if (JwtUtils.validateToken(token))
         {
             User user = JwtUtils.parseToken(token);
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            filterChain.doFilter(request, response);
         }
         else
         {
-            response.setContentType("application/json;charset=utf-8");
-            response.getWriter().write("{\"msg\":\"token无效\"}");
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//            response.setContentType("application/json;charset=utf-8");
+//            response.getWriter().write("{\"msg\":\"token无效\"}");
+//            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
+        filterChain.doFilter(request, response);
+
     }
 }

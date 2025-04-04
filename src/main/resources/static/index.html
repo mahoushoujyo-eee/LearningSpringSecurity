@@ -24,7 +24,8 @@
             <button type="submit" class="btn">登录</button>
         </form>
         <a href="/register.html">没有账号？立即注册</a>
-        <button onclick="checkToken()">检验权限</button>
+        <button onclick="checkToken()">检验登录态</button>
+        <button onclick="checkAuth()">检验权限</button>
     </div>
 
 <script>
@@ -57,6 +58,29 @@
                 alert('登录请求失败，请重试');
             });
     });
+
+    const checkAuth = () =>
+    {
+        fetch('auth/admin',
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'token': localStorage.getItem('token') },
+                body: JSON.stringify({ token: localStorage.getItem('token') })
+            })
+            .then(response => response.json())
+            .then(data =>
+            {
+                if (data)
+                {
+                    alert('验证成功');
+                }
+                else
+                {
+                    alert('验证失败: ' + data);
+               }
+            }
+            )
+    }
 
     const checkToken = () =>
     {
